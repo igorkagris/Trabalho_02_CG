@@ -18,17 +18,14 @@ def rotacao_x(mat_a, graus):
     
     return mat_a
 
-
-def revolucao(points, slices):
+def revolucao(points, slices, profundidade):
     in_3D = []
-
     rotation_slice = 360/slices
-
+    
     for i in range (slices):
         [in_3D.append([x, y, 0]) for x, y in points]
         in_3D = rotacao_x(in_3D, rotation_slice)
 
-    return in_3D
-            
-        
+    in_3D = [[x, y, z+profundidade] for x, y, z in in_3D]
 
+    return in_3D
