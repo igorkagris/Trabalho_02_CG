@@ -6,16 +6,14 @@ from pipeline import pipeline
 
 points = [] # Armazena os pontos clicados
 
-def clear_points(): # Limpa os pontos
-    points.clear()
-
-def Create_button(surface, text, left, top): #Desenha botão predefinido
-    button_rect = pygame.Rect(left, top, BUTTON.WIDTH, BUTTON.HEIGHT)
+def Create_button(surface, text, left, top, size): #Desenha botão predefinido
+    button_rect = pygame.Rect(left, top, round(BUTTON.WIDTH*size), BUTTON.HEIGHT)
     pygame.draw.rect(surface, BUTTON.COLLOR, button_rect)  #retangulo
     text_surface = font.render(text, True, TEXT.COLLOR) #Texto
     text_rect = text_surface.get_rect(center=button_rect.center)
     surface.blit(text_surface, text_rect)
     return button_rect
+
 
 
 # Inicializa a janela
@@ -42,15 +40,15 @@ while running:
         elif event.type == pygame.KEYUP:
             
             if event.key == pygame.K_BACKSPACE:# Limpa tela quando '<-' é pressionado
-                clear_points()
+                points.clear()
    
     screen.fill(WINDOW.BACKGROUND) # Limpa a tela
     
     font = pygame.font.Font(None, 26)
     # Desenha os Botões
-    button_del_last = Create_button(screen, "Apagar", BUTTON.MARGIN, BUTTON.MARGIN)
-    button_ok = Create_button(screen, "Prosseguir", (WINDOW.WIDTH-BUTTON.WIDTH)/2, BUTTON.MARGIN)
-    button_clear = Create_button(screen, "Limpar", WINDOW.WIDTH - BUTTON.WIDTH - BUTTON.MARGIN, BUTTON.MARGIN)
+    button_del_last = Create_button(screen, "Apagar", BUTTON.MARGIN, BUTTON.MARGIN, 1)
+    button_ok = Create_button(screen, "Prosseguir", (WINDOW.WIDTH-BUTTON.WIDTH)/2, BUTTON.MARGIN, 1)
+    button_clear = Create_button(screen, "Limpar", WINDOW.WIDTH - BUTTON.WIDTH - BUTTON.MARGIN, BUTTON.MARGIN, 1)
 
     #Verifica Cliques nos botões
     mouse_pos = (0, 0) #define
@@ -65,7 +63,7 @@ while running:
         points.pop()
         break
     elif button_clear.collidepoint(*mouse_pos): # Verifica botão "Limpar"
-        clear_points()
+        points.clear()
         
     # Redesenha os pontos
     for point in points:
@@ -77,7 +75,7 @@ while running:
 
     pygame.display.flip() # Atualiza a tela
 
-#inverte o denenho em y
+#inverte o desenho em y
 points = [[x, WINDOW.HEIGHT-y] for x, y in points]
 
 # Centro do objeto
@@ -103,3 +101,39 @@ vert_screen_pos = pipeline(VIEWPORT.WIDTH, VIEWPORT.HEIGHT, vertices, camera, ob
 
 for p in vert_screen_pos:
     print(p)
+
+
+
+
+
+
+
+
+
+
+running = True
+while running:
+
+    for event in pygame.event.get(): # Verifica eventos
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    screen.fill(WINDOW.BACKGROUND) # Limpa a tela
+
+
+    button_down = Create_button(screen, "-", ((WINDOW.WIDTH-1.5*BUTTON.WIDTH)/2)-0.4*BUTTON.WIDTH, BUTTON.MARGIN, 0.3)
+    text = "Faces: " + str(DESENHO.FACES)
+    text_faces = Create_button(screen, text, (WINDOW.WIDTH-1.5*BUTTON.WIDTH)/2 ,BUTTON.MARGIN , 1.5)
+    button_up = Create_button(screen, "+", (WINDOW.WIDTH/2)+0.85*BUTTON.WIDTH, BUTTON.MARGIN, 0.3)
+    button_clear = Create_button(screen, "Limpar", WINDOW.WIDTH - BUTTON.WIDTH - BUTTON.MARGIN, BUTTON.MARGIN, 1)
+
+    # Desenha os pontos
+    for point in vert_screen_pos:
+        pygame.draw.circle(screen, DESENHO.POINT_COLOR, (int(point[0]), int(point[1])), DESENHO.POINT_RADIUS)
+
+    if len(vert_screen_pos) >= 2: # Desenha linhas entre os pontos (a partir do segundo ponto)
+        for i in range(len(vert_screen_pos) - 1):
+            pygame.draw.line(screen, DESENHO.LINE_COLOR, vert_screen_pos[i][:2], vert_screen_pos[i + 1][:2])
+
+    pygame.display.flip() # Atualiza a tela
