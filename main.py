@@ -88,29 +88,18 @@ obj_center = [(x_min + x_max)/2, 0, DESENHO.PROFUNDIDADE]
 # Faz a revolução dos pontos
 vertices = revolucao(points, DESENHO.FACES, DESENHO.PROFUNDIDADE)
 
+'''Exemplo do caderno para entrada
+vertices.clear()
+vertices.append([21.2, 0.7, 42.3])
+vertices.append([34.1, 3.4, 27.2])
+vertices.append([18.8, 5.6, 14.6])
+vertices.append([5.9, 2.9, 29.7])
+vertices.append([20, 20.9, 36.6])
+obj_center = [20, 10, 25]'''
 
-camera = [0, 0, 0] # Posição da câmera
-dp = 30 # Distância do plano de projeção
-vert_screen_pos = pipeline(WINDOW.WIDTH, WINDOW.HEIGHT, vertices, camera, obj_center, dp)
+camera = [25, 15, 80] # Posição da câmera
+dp = 40 # Distância do plano de projeção
+vert_screen_pos = pipeline(VIEWPORT.WIDTH, VIEWPORT.HEIGHT, vertices, camera, obj_center, dp)
 
-pygame.init()
-screen = pygame.display.set_mode((WINDOW.WIDTH, WINDOW.HEIGHT))
-pygame.display.set_caption(WINDOW.TITLE)
-
-screen.fill(WINDOW.BACKGROUND)
-for vert in vert_screen_pos:
-    if (vert[0] >= 0 and vert[0] < WINDOW.WIDTH and vert[1] >= 0 and vert[1] < WINDOW.HEIGHT):
-        print("1")
-        pygame.draw.circle(screen, DESENHO.POINT_COLOR, [round(vert[0]), round(vert[1])], DESENHO.POINT_RADIUS)
-
-
-    '''if len(vert_screen_pos) >= 2: # Desenha linhas entre os pontos (a partir do segundo ponto)
-        for i in range(len(vert_screen_pos) - 1):
-            pygame.draw.line(screen, DESENHO.LINE_COLOR, vert_screen_pos[i], vert_screen_pos[i + 1])
-'''
-pygame.display.flip() # Atualiza a tela
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+for p in vert_screen_pos:
+    print(p)
