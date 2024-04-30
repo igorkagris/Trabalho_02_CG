@@ -37,14 +37,14 @@ def camera_transf_mat(vrp, p):
 
 
 # Define a matriz de projeção
-def pipeline(width, height, verts, vrp, p, dp):
+def pipeline(verts, vrp, p, dp):
     
     camera_transf = camera_transf_mat(vrp, p)
 
     camera_pers =  [[1,    0,    0,    0],
                     [0,    1,    0,    0],
                     [0,    0,    1,    0],
-                    [0,    0, 1/dp,    0]]
+                    [0,    0, -1/dp,    0]]
     
     viewp_mat = matmul(camera_pers, camera_transf)
     
@@ -57,9 +57,5 @@ def pipeline(width, height, verts, vrp, p, dp):
         h = viewp_mat[3][0]*vert[0] + viewp_mat[3][1]*vert[1] + viewp_mat[3][2]*vert[2] + viewp_mat[3][3]*1
         viewp_points.append([round(x/h, 6), round(y/h, 6), round(z, 6), round(h, 6)]) #x = x/h ; y = y/h
 
-    '''mjp = [[width/2, 0, 0, ],
-           [0, height/2, 0],
-           [width/2, height/2, 1], 
-           [0, 0, 0]]'''
 
     return viewp_points

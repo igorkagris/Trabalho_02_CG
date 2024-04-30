@@ -16,8 +16,8 @@ class DESENHO:
     POINT_COLOR = (255, 0, 0)
     POINT_RADIUS = 5
     LINE_COLOR = (0, 0, 255)
-    FACES = 4 # número de faces para revolução
-    PROFUNDIDADE = 100  #Profundidade do objeto apos a revolução
+    FACES = 3 # número de faces para revolução
+    PROFUNDIDADE = 0  #Profundidade do objeto apos a revolução
 
 # Definições do botão
 class BUTTON:
