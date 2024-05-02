@@ -1,13 +1,12 @@
 from math import sqrt
 from numpy import matmul
 
-def normalize(v):
+def normalize(v): #Correto (conferido)
     module = sqrt(v[0]**2 + v[1]**2 + v[2]**2)
     normalized = [v[0]/module, v[1]/module, v[2]/module]
     return normalized
 
-
-def camera_transf_mat(vrp, p):
+def camera_transf_mat(vrp, p): #Correto (conferido)
     
     translation_matrix = [[1, 0, 0, -vrp[0]],
                           [0, 1, 0, -vrp[1]],
@@ -44,7 +43,7 @@ def pipeline(width, height, verts, vrp, p, dp):
     camera_pers =  [[1,    0,    0,    0],
                     [0,    1,    0,    0],
                     [0,    0,    1,    0],
-                    [0,    0, 1/dp,    0]]
+                    [0,    0,-1/dp,    0]]
     
     viewp_mat = matmul(camera_pers, camera_transf)
     
@@ -56,10 +55,5 @@ def pipeline(width, height, verts, vrp, p, dp):
         z = viewp_mat[2][0]*vert[0] + viewp_mat[2][1]*vert[1] + viewp_mat[2][2]*vert[2] + viewp_mat[2][3]*1
         h = viewp_mat[3][0]*vert[0] + viewp_mat[3][1]*vert[1] + viewp_mat[3][2]*vert[2] + viewp_mat[3][3]*1
         viewp_points.append([round(x/h, 6), round(y/h, 6), round(z, 6), round(h, 6)]) #x = x/h ; y = y/h
-
-    '''mjp = [[width/2, 0, 0, ],
-           [0, height/2, 0],
-           [width/2, height/2, 1], 
-           [0, 0, 0]]'''
 
     return viewp_points

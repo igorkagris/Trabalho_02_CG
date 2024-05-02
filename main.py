@@ -16,6 +16,10 @@ def Create_button(surface, text, left, top, size): #Desenha botão predefinido
 
 
 
+
+
+
+
 # Inicializa a janela
 pygame.init()
 screen = pygame.display.set_mode((WINDOW.WIDTH, WINDOW.HEIGHT))
@@ -86,21 +90,24 @@ obj_center = [(x_min + x_max)/2, 0, DESENHO.PROFUNDIDADE]
 # Faz a revolução dos pontos
 vertices = revolucao(points, DESENHO.FACES, DESENHO.PROFUNDIDADE)
 
-'''Exemplo do caderno para entrada
+#Exemplo do caderno para entrada
 vertices.clear()
 vertices.append([21.2, 0.7, 42.3])
 vertices.append([34.1, 3.4, 27.2])
 vertices.append([18.8, 5.6, 14.6])
 vertices.append([5.9, 2.9, 29.7])
 vertices.append([20, 20.9, 36.6])
-obj_center = [20, 10, 25]'''
+obj_center = [20, 10, 25]
 
 camera = [25, 15, 80] # Posição da câmera
 dp = 40 # Distância do plano de projeção
 vert_screen_pos = pipeline(VIEWPORT.WIDTH, VIEWPORT.HEIGHT, vertices, camera, obj_center, dp)
 
+print("Vertices na tela: ")
 for p in vert_screen_pos:
     print(p)
+
+
 
 
 
@@ -118,6 +125,8 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN: # Coordenadas do clique
+            points.append(event.pos)
 
     screen.fill(WINDOW.BACKGROUND) # Limpa a tela
 
@@ -127,6 +136,26 @@ while running:
     text_faces = Create_button(screen, text, (WINDOW.WIDTH-1.5*BUTTON.WIDTH)/2 ,BUTTON.MARGIN , 1.5)
     button_up = Create_button(screen, "+", (WINDOW.WIDTH/2)+0.85*BUTTON.WIDTH, BUTTON.MARGIN, 0.3)
     button_clear = Create_button(screen, "Limpar", WINDOW.WIDTH - BUTTON.WIDTH - BUTTON.MARGIN, BUTTON.MARGIN, 1)
+
+    #Verifica Cliques nos botões
+    mouse_pos = (0, 0) #define
+    if len(points) != 0:    #mouse_pos = ultimo clique
+        mouse_pos = points[-1]
+    if button_down.collidepoint(*mouse_pos): # Verifica botão "Apagar"
+        points.pop()
+        if DESENHO.FACES > 20:
+            DESENHO.FACES -= 10
+        elif DESENHO.FACES > 3:
+            DESENHO.FACES -= 1
+    if button_up.collidepoint(*mouse_pos): # Verifica botão "Apagar"
+        points.pop()
+        if DESENHO.FACES < 20:
+            DESENHO.FACES += 1
+        elif DESENHO.FACES >= 20:
+            DESENHO.FACES += 10
+    
+
+
 
     # Desenha os pontos
     for point in vert_screen_pos:
