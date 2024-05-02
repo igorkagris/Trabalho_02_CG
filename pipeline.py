@@ -36,7 +36,7 @@ def camera_transf_mat(vrp, p): #Correto (conferido)
 
 
 # Define a matriz de projeção
-def pipeline(width, height, verts, vrp, p, dp):
+def pipeline(verts, vrp, p, dp):
     
     camera_transf = camera_transf_mat(vrp, p)
 
