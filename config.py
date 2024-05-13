@@ -1,23 +1,25 @@
 
 
 class WINDOW: # Definições da janela
-    WIDTH = 1280
-    HEIGHT = 720
-    TITLE = "Desenho de pontos e linhas"
+    WIDTH = 1200 
+    HEIGHT = 450
+    TITLE = "Desenho de objeto para revolucionar"
     BACKGROUND = (255, 255, 255)
-
-class VIEWPORT: # Definições da viewport
-    WIDTH = 800
-    HEIGHT = 600
-
 
 # Definições do desenho
 class DESENHO:
-    POINT_COLOR = (255, 0, 0)
-    POINT_RADIUS = 5
-    LINE_COLOR = (0, 0, 255)
-    FACES = 3 # número de faces para revolução
+    TITLE = "Objeto no sistema 3D"
+    VP_min = [0, 0]
+    VP_max = [800, 600]
+
+    POINT_COLOR = (0, 0, 0)
+    POINT_RADIUS = 3
+    LINE_COLOR = (150, 150, 150)
+
+    FACES = 10 # número de faces para revolução
     PROFUNDIDADE = 0  #Profundidade do objeto apos a revolução
+    PERS = False  #Projeção perspectiva?
+    HIDE_FACES = True #Esconder faces?
 
 # Definições do botão
 class BUTTON:
@@ -28,3 +30,9 @@ class BUTTON:
 
 class TEXT:
     COLLOR = (0, 0, 0)
+
+class CAMERA:
+    VRP = [25, 15, 80]
+    dp = 40
+    Y = [0, 1, 0]
+    

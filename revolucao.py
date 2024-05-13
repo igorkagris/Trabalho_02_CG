@@ -1,12 +1,25 @@
 import math
 
-def rotacao_x(mat_a, graus):
+def get_obj_center(vertices): #Calcula o centro do objeto
+    x, y, z = 0, 0, 0
+
+    for vert in vertices:
+        x += vert[0]
+        y += vert[1]
+        z += vert[2]
+    
+    x /= len(vertices)
+    y /= len(vertices)
+    z /= len(vertices)
+    return [x, y, z]
+
+def rotacao_x(mat_a, graus): #Rotaciona em torno do eixo X
     rad = math.radians(graus)
     sen = math.sin(rad)
     cos = math.cos(rad)
     '''mat_rot = {(1,  0 ,   0 ),
-               (0, cos, -sen),
-               (0, sen,  cos)}'''
+                  (0, cos, -sen),
+                  (0, sen,  cos)}'''
 
     for i in range(len(mat_a)):
         x, y, z = mat_a[i]
@@ -19,6 +32,7 @@ def rotacao_x(mat_a, graus):
     return mat_a
 
 def revolucao(points, slices, profundidade):
+
     in_3D = []
     rotation_slice = 360/slices
     
@@ -26,32 +40,23 @@ def revolucao(points, slices, profundidade):
         [in_3D.append([x, y, 0]) for x, y in points]
         in_3D = rotacao_x(in_3D, rotation_slice)
     
-    in_3D = [[x, y, z+profundidade] for x, y, z in in_3D]
+    if profundidade != 0:
+        in_3D = [[x, y, z+profundidade] for x, y, z in in_3D]
 
-    edges = [] # Lista de arestas (esquerda, direita, acima, abaixo)
+    
+    faces = [] # Lista de faces anti-horária (atual, abaixo, baixo_direita, direita)
     for i in range(slices):
         itens_linha = int((len(in_3D))/slices)
         for j in range(itens_linha):
-            if i == 0:
-                acima = slices-1
-                abaixo = i+1
-            elif i < slices-1:
-                acima = i-1
+            if i < slices-1:
                 abaixo = i+1
             else:
-                acima = i-1
                 abaixo = 0
-            if j == 0:
-                esquerda = itens_linha-1
-                direita = j+1
-            elif j < itens_linha-1:
-                esquerda = j-1
+            if j < itens_linha-1:
                 direita = j+1
             else:
-                esquerda = j-1
                 direita = 0
-            edges.append([i*itens_linha+esquerda, i*itens_linha+direita, acima*itens_linha+j, abaixo*itens_linha+j])
+            faces.append([i*itens_linha+j, abaixo*itens_linha+j, abaixo*itens_linha+direita, i*itens_linha+direita])
 
-    faces = []
-    
-    return in_3D, edges
+    obj_center = get_obj_center(in_3D)
+    return in_3D, faces, obj_center
