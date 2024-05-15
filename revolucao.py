@@ -60,3 +60,4 @@ def revolucao(points, slices, profundidade):
 
     obj_center = get_obj_center(in_3D)
     return in_3D, faces, obj_center
+

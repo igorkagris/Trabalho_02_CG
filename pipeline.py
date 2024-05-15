@@ -42,12 +42,11 @@ def camera_transf_mat(vrp, p, Y): #Transformaçao SRU -> SRC
     return matmul(transf_matrix, translation_matrix)
 
 def camera_viewport_mat(Xmin, Ymin, Xmax, Ymax, umin, vmin, umax, vmax): #Transformaçao SRC -> SRT
-    du = umax - umin
-    dv = vmax - vmin
-    dx = Xmax - Xmin
-    dy = Ymax - Ymin
-    return [[ du/dx,   0  ,   0  ,-Xmin*(du/dx)+umin],
-            [   0  ,-dv/dy,   0  , Ymin*(dv/dy)+vmax],
+
+
+
+    return [[ (umax-umin)/(2*Xmax),   0  ,   0  ,Xmax*((umax-umin)/(2*Xmax))+umin],
+            [   0  ,(vmin-vmax)/(Ymax-Ymin),   0  , Ymin*((vmax-vmin)/(Ymax-Ymin))+vmax],
             [   0  ,   0  ,   1  ,       0          ],
             [   0  ,   0  ,   0  ,       1          ] ]
     

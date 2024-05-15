@@ -1,8 +1,8 @@
 
 
 class WINDOW: # Definições da janela
-    WIDTH = 1200 
-    HEIGHT = 450
+    WIDTH = 800
+    HEIGHT = 600
     TITLE = "Desenho de objeto para revolucionar"
     BACKGROUND = (255, 255, 255)
 
@@ -32,7 +32,7 @@ class TEXT:
     COLLOR = (0, 0, 0)
 
 class CAMERA:
-    VRP = [25, 15, 80]
+    VRP = [0, 600, 1200]
     dp = 40
     Y = [0, 1, 0]
     

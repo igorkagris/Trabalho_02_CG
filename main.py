@@ -111,8 +111,8 @@ visible_points, visible_faces = visibility(vert_in_screen_pos, faces, CAMERA.VRP
 
 
 #Centraliza os pontos na tela através de gambiarra
-for i in range(len(vert_in_screen_pos)):
-    vert_in_screen_pos[i][0] += DESENHO.VP_max[0]/2
+'''for i in range(len(vert_in_screen_pos)):
+    vert_in_screen_pos[i][0] += DESENHO.VP_max[0]/2'''
 
 
 # Reconfigura a janela
