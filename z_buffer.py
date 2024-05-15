@@ -11,15 +11,15 @@ def rasterizar_vertices(vertices):
     bordas_direita = []
 
    
-    for i in range(len(ordered_vertices)):      # Calcular as bordas esquerda e direita para cada linha
+    for i in range(len(ordered_vertices)+1):      # Calcular as bordas esquerda e direita para cada linha
 
         x1, y1 = ordered_vertices[i]
-        if (i >= len(ordered_vertices)): 
+        if (i == len(ordered_vertices)): 
             x2, y2 = ordered_vertices[0]
         x2, y2 = ordered_vertices[i + 1]
 
         if y1 != y2:  #Linha não horizontal
-            tx = (x2 - x1) / (y2 - y1) # Calcular a inclinação da aresta
+            tx = (x2 - x1) / (y2 - y1) # Calcular tx de x p cada y
 
             for y in range (y2-y1):  # Percorrer cada linha entre y1 e y2
                 x += tx
