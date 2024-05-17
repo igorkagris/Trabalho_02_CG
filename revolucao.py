@@ -1,5 +1,44 @@
 import math
 
+def faces_points(in_3d, slices):
+    faces = [] # Lista de faces anti-horária (atual, abaixo, baixo_direita, direita)
+    for i in range(slices):
+        itens_linha = int((len(in_3D))/slices)
+        for j in range(itens_linha):
+            if i < slices-1:
+                abaixo = i+1
+            else:
+                abaixo = 0
+            if j < itens_linha-1:
+                direita = j+1
+            else:
+                direita = 0
+            faces.append([i*itens_linha+j, abaixo*itens_linha+j, abaixo*itens_linha+direita, i*itens_linha+direita])
+    return faces
+
+def counterclockwise_points(points):
+        ymin = [-1, -1]
+    for i in range(len(points)):
+        if ymin[1] < points[i][1] or ymin[1] == -1:
+            ymin = points[i]
+            j = i
+    
+    if j!=0 and j!=len(points)-1:
+                ant = points[j-1]
+                prox = points[j+1]
+    elif j == 0:
+                ant = points[-1]
+                prox = points[j+1]
+    else:
+                ant = points[j-1]
+                prox = points[0]
+        
+    if ant[0] > prox[0]: #inverte a ordem dos pontos inseridos para ficar anti-horários
+        return False
+    else:
+        return True
+
+
 def get_obj_center(vertices): #Calcula o centro do objeto
     x, y, z = 0, 0, 0
 
@@ -12,6 +51,7 @@ def get_obj_center(vertices): #Calcula o centro do objeto
     y /= len(vertices)
     z /= len(vertices)
     return [x, y, z]
+
 
 def rotacao_x(mat_a, graus): #Rotaciona em torno do eixo X
     rad = math.radians(graus)
@@ -31,11 +71,15 @@ def rotacao_x(mat_a, graus): #Rotaciona em torno do eixo X
     
     return mat_a
 
+
 def revolucao(points, slices, profundidade):
 
     in_3D = []
     rotation_slice = 360/slices
-    
+
+    if not counterclockwise_points(points):
+        points[::-1]
+        
     for i in range (slices):
         [in_3D.append([x, y, 0]) for x, y in points]
         in_3D = rotacao_x(in_3D, rotation_slice)
@@ -43,21 +87,9 @@ def revolucao(points, slices, profundidade):
     if profundidade != 0:
         in_3D = [[x, y, z+profundidade] for x, y, z in in_3D]
 
-    
-    faces = [] # Lista de faces anti-horária (atual, abaixo, baixo_direita, direita)
-    for i in range(slices):
-        itens_linha = int((len(in_3D))/slices)
-        for j in range(itens_linha):
-            if i < slices-1:
-                abaixo = i+1
-            else:
-                abaixo = 0
-            if j < itens_linha-1:
-                direita = j+1
-            else:
-                direita = 0
-            faces.append([i*itens_linha+j, abaixo*itens_linha+j, abaixo*itens_linha+direita, i*itens_linha+direita])
+    faces = faces_points(in_3d, slices)
 
     obj_center = get_obj_center(in_3D)
+    
     return in_3D, faces, obj_center
 
