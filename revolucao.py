@@ -3,7 +3,7 @@ import math
 def faces_points(in_3d, slices):
     faces = [] # Lista de faces anti-horária (atual, abaixo, baixo_direita, direita)
     for i in range(slices):
-        itens_linha = int((len(in_3D))/slices)
+        itens_linha = int((len(in_3d))/slices)
         for j in range(itens_linha):
             if i < slices-1:
                 abaixo = i+1
@@ -16,8 +16,9 @@ def faces_points(in_3d, slices):
             faces.append([i*itens_linha+j, abaixo*itens_linha+j, abaixo*itens_linha+direita, i*itens_linha+direita])
     return faces
 
+
 def counterclockwise_points(points):
-        ymin = [-1, -1]
+    ymin = [-1, -1]
     for i in range(len(points)):
         if ymin[1] < points[i][1] or ymin[1] == -1:
             ymin = points[i]
@@ -79,6 +80,7 @@ def revolucao(points, slices, profundidade):
 
     if not counterclockwise_points(points):
         points[::-1]
+        print("Pontos invertidos: ", points)
         
     for i in range (slices):
         [in_3D.append([x, y, 0]) for x, y in points]
@@ -87,7 +89,7 @@ def revolucao(points, slices, profundidade):
     if profundidade != 0:
         in_3D = [[x, y, z+profundidade] for x, y, z in in_3D]
 
-    faces = faces_points(in_3d, slices)
+    faces = faces_points(in_3D, slices)
 
     obj_center = get_obj_center(in_3D)
     

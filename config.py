@@ -18,7 +18,7 @@ class DESENHO:
 
     FACES = 10 # número de faces para revolução
     PROFUNDIDADE = 0  #Profundidade do objeto apos a revolução
-    PERS = False  #Projeção perspectiva?
+    PERS = True  #Projeção perspectiva?
     HIDE_FACES = True #Esconder faces?
 
 # Definições do botão
@@ -33,6 +33,6 @@ class TEXT:
 
 class CAMERA:
     VRP = [0, 600, 1200]
-    dp = 40
+    dp = 1000
     Y = [0, 1, 0]
     
