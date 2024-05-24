@@ -1,7 +1,7 @@
 import math
 
 def faces_points(in_3d, slices):
-    faces = [] # Lista de faces anti-horária (atual, abaixo, baixo_direita, direita)
+    faces = [] # Lista de faces anti-horária
     for i in range(slices):
         itens_linha = int((len(in_3d))/slices)
         for j in range(itens_linha):
@@ -13,7 +13,7 @@ def faces_points(in_3d, slices):
                 direita = j+1
             else:
                 direita = 0
-            faces.append([i*itens_linha+j, abaixo*itens_linha+j, abaixo*itens_linha+direita, i*itens_linha+direita])
+            faces.append([i*itens_linha+j, i*itens_linha+direita, abaixo*itens_linha+direita, abaixo*itens_linha+j])
     return faces
 
 

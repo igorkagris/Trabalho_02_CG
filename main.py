@@ -17,9 +17,6 @@ def Create_button(surface, text, left, top, size): #Desenha botão predefinido
     return button_rect
 
 
-
-
-
 # Inicializa a janela
 pygame.init()
 screen = pygame.display.set_mode((WINDOW.WIDTH, WINDOW.HEIGHT))
@@ -106,7 +103,7 @@ for vert in vert_in_screen_pos:
                                # pontos,  camera, centro objeto,     dp ,  vetor Y,  Coordenadas de tela, e de viewport
 vert_in_screen_pos = pipeline(DESENHO.PERS, vertices, CAMERA.VRP, obj_center, CAMERA.dp, CAMERA.Y, 0, -WINDOW.HEIGHT, WINDOW.WIDTH, WINDOW.HEIGHT, DESENHO.VP_min[0], DESENHO.VP_min[1], DESENHO.VP_max[0], DESENHO.VP_max[1])
                                                                                                     #(-WINDOW.HEIGHT) Duplica altura em Y para centralizar o objeto desenhado
-visible_points, visible_faces = visibility(vert_in_screen_pos, faces, CAMERA.VRP)
+visible_points, visible_faces = visibility(vertices, faces, CAMERA.VRP)
 
 
 

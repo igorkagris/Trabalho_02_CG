@@ -16,7 +16,7 @@ class DESENHO:
     POINT_RADIUS = 3
     LINE_COLOR = (150, 150, 150)
 
-    FACES = 10 # número de faces para revolução
+    FACES = 100 # número de faces para revolução
     PROFUNDIDADE = 0  #Profundidade do objeto apos a revolução
     PERS = True  #Projeção perspectiva?
     HIDE_FACES = True #Esconder faces?
