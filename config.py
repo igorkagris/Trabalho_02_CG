@@ -19,7 +19,7 @@ class DESENHO:
     FACES = 100 # número de faces para revolução
     PROFUNDIDADE = 0  #Profundidade do objeto apos a revolução
     PERS = True  #Projeção perspectiva?
-    HIDE_FACES = True #Esconder faces?
+    HIDE_FACES = False #Esconder faces?
 
 # Definições do botão
 class BUTTON:

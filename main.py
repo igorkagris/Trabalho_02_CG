@@ -105,8 +105,6 @@ vert_in_screen_pos = pipeline(DESENHO.PERS, vertices, CAMERA.VRP, obj_center, CA
                                                                                                     #(-WINDOW.HEIGHT) Duplica altura em Y para centralizar o objeto desenhado
 visible_points, visible_faces = visibility(vertices, faces, CAMERA.VRP)
 
-
-
 #Centraliza os pontos na tela através de gambiarra
 '''for i in range(len(vert_in_screen_pos)):
     vert_in_screen_pos[i][0] += DESENHO.VP_max[0]/2'''
